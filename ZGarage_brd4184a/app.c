@@ -34,6 +34,7 @@
 #include "em_gpio.h"
 #include "sl_status.h"
 #include "sl_simple_button_instances.h"
+#include "sl_simple_led_instances.h"
 #include "app_log.h"
 #include "app_assert.h"
 #include "sl_bluetooth.h"
@@ -113,6 +114,9 @@
 
 // Timer
 static sl_simple_timer_t shutdown_timer;
+
+// Button state.
+static volatile bool app_btn0_pressed = false;
 
 // -----------------------------------------------------------------------------
 // Private function declarations
@@ -202,6 +206,7 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
     case sl_bt_evt_connection_opened_id:
       app_log_info("Connection opened");
       app_log_nl();
+      sl_led_turn_on(&sl_led_led0);
       advertise_stop();
       shutdown_stop_timer();
       sensor_init();
@@ -211,6 +216,7 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
     case sl_bt_evt_connection_closed_id:
       app_log_info("Connection closed");
       app_log_nl();
+      sl_led_turn_off(&sl_led_led0);
       advertise_start();
       shutdown_start_timer();
       sensor_deinit();
@@ -228,6 +234,23 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
 void sl_button_on_change(const sl_button_t *handle)
 {
   (void)handle;
+  // Button pressed.
+  if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED) {
+    if (&sl_button_btn0 == handle) {
+      sl_led_turn_on(&sl_led_led0);
+      app_log_info("Button pressed\n");
+      app_btn0_pressed = true;
+    }
+  }
+  // Button released.
+  else if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_RELEASED) {
+    if (&sl_button_btn0 == handle) {
+      sl_led_turn_off(&sl_led_led0);
+      app_log_info("Button released\n");
+      app_btn0_pressed = false;
+    }
+  }
+
 #ifdef SL_CATALOG_GATT_SERVICE_AIO_PRESENT
   sl_gatt_service_aio_on_change();
 #endif // SL_CATALOG_GATT_SERVICE_AIO_PRESENT

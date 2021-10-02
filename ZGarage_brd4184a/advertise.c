@@ -276,11 +276,11 @@ void advertise_start(void)
   app_assert_status(sc);
 
   // Start timer to alternate advertising data
-  sc = sl_simple_timer_start(&adv_timer,
-                             ADV_ALTERNATE_TIME_MS,
-                             adv_timer_cb,
-                             NULL,
-                             true);
+//  sc = sl_simple_timer_start(&adv_timer,
+//                             ADV_ALTERNATE_TIME_MS,
+//                             adv_timer_cb,
+//                             NULL,
+//                             true);
   app_assert_status(sc);
 }
 
