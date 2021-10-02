@@ -43,7 +43,9 @@
 #include "advertise.h"
 #include "sl_power_supply.h"
 #include "board.h"
+#include "garage_control.h"
 #include "app.h"
+
 #ifdef SL_COMPONENT_CATALOG_PRESENT
 #include "sl_component_catalog.h"
 #endif // SL_COMPONENT_CATALOG_PRESENT
@@ -109,6 +111,7 @@
 // Configuration
 
 #define SHUTDOWN_TIMEOUT_MS             60000
+
 // -----------------------------------------------------------------------------
 // Private variables
 
@@ -132,10 +135,12 @@ static void sensor_deinit(void);
 
 void app_init(void)
 {
-  app_log_info("Thuderboard demo initialised");
+  app_log_info("Z Garage demo initialized");
   app_log_nl();
   sl_power_supply_probe();
   shutdown_start_timer();
+  GarageControl_init();
+
 #ifdef BOARD_RGBLED_PRESENT
   rgb_led_init();
 #endif // BOARD_RGBLED_PRESENT
@@ -210,6 +215,7 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
       advertise_stop();
       shutdown_stop_timer();
       sensor_init();
+      //GPIO_PinOutSet(SL_SIMPLE_GARAGE_PORT, SL_SIMPLE_GARAGE_PIN);
       break;
 
     // -------------------------------
@@ -220,6 +226,7 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
       advertise_start();
       shutdown_start_timer();
       sensor_deinit();
+      //GPIO_PinOutClear(SL_SIMPLE_GARAGE_PORT, SL_SIMPLE_GARAGE_PIN);
       break;
 
     // -------------------------------
@@ -230,7 +237,6 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
 
 // -----------------------------------------------------------------------------
 // Push button event handler
-
 void sl_button_on_change(const sl_button_t *handle)
 {
   (void)handle;
@@ -238,7 +244,9 @@ void sl_button_on_change(const sl_button_t *handle)
   if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_PRESSED) {
     if (&sl_button_btn0 == handle) {
       sl_led_turn_on(&sl_led_led0);
-      app_log_info("Button pressed\n");
+      //app_log_info("Button pressed\n\r");
+      // Close relay switch
+      GarageControl_PinSet();
       app_btn0_pressed = true;
     }
   }
@@ -246,7 +254,9 @@ void sl_button_on_change(const sl_button_t *handle)
   else if (sl_button_get_state(handle) == SL_SIMPLE_BUTTON_RELEASED) {
     if (&sl_button_btn0 == handle) {
       sl_led_turn_off(&sl_led_led0);
-      app_log_info("Button released\n");
+      //app_log_info("Button released\n\r");
+      // Open relay switch
+      GarageControl_PinClear();
       app_btn0_pressed = false;
     }
   }
