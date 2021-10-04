@@ -8,6 +8,7 @@
 #ifndef GARAGE_CONTROL_H_
 #define GARAGE_CONTROL_H_
 
+#define GARAGE_ACCESS_CODE 0x12345678
 
 void GarageControl_init(void);
 void GarageControl_PinSet(void);

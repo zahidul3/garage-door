@@ -36,13 +36,25 @@ static sl_simple_timer_t garage_timer;
 // Private function declarations
 static void garage_timer_cb(sl_simple_timer_t *timer, void *data);
 
+static void printGarageState(GARAGE_STATE gState)
+{
+  switch(gState)
+  {
+    case GARAGE_START: app_log_info("State: GARAGE_START\n\r"); break;
+    case GARAGE_STARTING: app_log_info("State: GARAGE_STARTING\n\r"); break;
+    case GARAGE_IDLE: app_log_info("State: GARAGE_IDLE\n\r"); break;
+  }
+}
 
 static void garage_timer_cb(sl_simple_timer_t *timer, void *data)
 {
   (void)timer;
   (void)data;
+
+  GARAGE_STATE currentGarageState = garageState;
+
   // Turn on/off garage door, close/open relay switch
-  app_log_info("In garage_timer_cb: %d\n\r", RuntimeSeconds++);
+  //app_log_info("In garage_timer_cb: %d\n\r", RuntimeSeconds++);
   switch(garageState)
   {
     case GARAGE_START:
@@ -60,6 +72,11 @@ static void garage_timer_cb(sl_simple_timer_t *timer, void *data)
       garageState = GARAGE_IDLE;
       break;
   }
+
+  // print if state changed
+  if(currentGarageState != garageState)
+    printGarageState(currentGarageState);
+
   // Toggle advertising LED state
   sl_led_toggle(GARAGE_LED);
 }
@@ -89,16 +106,17 @@ void GarageControl_init(void)
 void GarageControl_PinSet(void)
 {
   GPIO_PinOutSet(SL_SIMPLE_GARAGE_PORT, SL_SIMPLE_GARAGE_PIN);
-  app_log_info("GarageControl_PinSet\n\r");
+  //app_log_info("GarageControl_PinSet\n\r");
 }
 
 void GarageControl_PinClear(void)
 {
   GPIO_PinOutClear(SL_SIMPLE_GARAGE_PORT, SL_SIMPLE_GARAGE_PIN);
-  app_log_info("GarageControl_PinClear\n\r");
+  //app_log_info("GarageControl_PinClear\n\r");
 }
 
 void GarageControl_Open(void)
 {
+  app_log_debug("GarageControl_Open\n\r");
   garageState = GARAGE_START;
 }

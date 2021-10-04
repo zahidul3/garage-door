@@ -51,7 +51,7 @@
 
 // <q APP_LOG_TIME_ENABLE> Timestamp
 // <i> Enables printing timestamp
-#define APP_LOG_TIME_ENABLE                     0
+#define APP_LOG_TIME_ENABLE                     1
 
 // <q APP_LOG_COUNTER_ENABLE> Counter
 // <i> Enables printing counter
