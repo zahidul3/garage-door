@@ -204,13 +204,13 @@ static void adv_timer_cb(sl_simple_timer_t *timer, void *data)
 {
   (void)timer;
   (void)data;
-  // Initial advertising type
-  static adv_type_t advType = ADV_TYPE_DEFAULT;
-  // Swap advertising message
-  advType = (advType == ADV_TYPE_IBEACON)
-            ? ADV_TYPE_SCAN_RESPONSE
-            : ADV_TYPE_IBEACON;
-  adv_set_data(advType);
+//  // Initial advertising type
+//  static adv_type_t advType = ADV_TYPE_DEFAULT;
+//  // Swap advertising message
+//  advType = (advType == ADV_TYPE_IBEACON)
+//            ? ADV_TYPE_SCAN_RESPONSE
+//            : ADV_TYPE_IBEACON;
+//  adv_set_data(advType);
   // Toggle advertising LED state
   sl_led_toggle(ADV_LED);
 }
@@ -276,11 +276,11 @@ void advertise_start(void)
   app_assert_status(sc);
 
   // Start timer to alternate advertising data
-//  sc = sl_simple_timer_start(&adv_timer,
-//                             ADV_ALTERNATE_TIME_MS,
-//                             adv_timer_cb,
-//                             NULL,
-//                             true);
+  sc = sl_simple_timer_start(&adv_timer,
+                             ADV_ALTERNATE_TIME_MS,
+                             adv_timer_cb,
+                             NULL,
+                             true);
   app_assert_status(sc);
 }
 

@@ -60,10 +60,12 @@ static void garage_timer_cb(sl_simple_timer_t *timer, void *data)
     case GARAGE_START:
       GarageControl_PinSet();
       garageState = GARAGE_STARTING;
+      sl_led_toggle(GARAGE_LED);
       break;
     case GARAGE_STARTING:
       GarageControl_PinClear();
       garageState = GARAGE_IDLE;
+      sl_led_toggle(GARAGE_LED);
       break;
     case GARAGE_IDLE:
       // should be idle most time
@@ -78,7 +80,7 @@ static void garage_timer_cb(sl_simple_timer_t *timer, void *data)
     printGarageState(currentGarageState);
 
   // Toggle advertising LED state
-  sl_led_toggle(GARAGE_LED);
+  //sl_led_toggle(GARAGE_LED);
 }
 
 void GarageControl_init(void)

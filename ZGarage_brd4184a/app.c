@@ -211,11 +211,11 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
     case sl_bt_evt_connection_opened_id:
       app_log_info("Connection opened");
       app_log_nl();
-      sl_led_turn_on(&sl_led_led0);
       advertise_stop();
       shutdown_stop_timer();
       sensor_init();
       //GPIO_PinOutSet(SL_SIMPLE_GARAGE_PORT, SL_SIMPLE_GARAGE_PIN);
+      sl_led_turn_on(&sl_led_led0);
       break;
 
     // -------------------------------
