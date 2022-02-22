@@ -221,7 +221,7 @@ static void adv_timer_cb(sl_simple_timer_t *timer, void *data)
 void advertise_init(uint32_t unique_id)
 {
   sl_status_t sc;
-  int local_name_length;
+  int local_name_length, selectedTxPower;
   // Helper buffer to hold device name + string terminating null character
   char local_name[ADVERTISE_DEVICE_NAME_LENGTH + 1];
 
@@ -246,6 +246,10 @@ void advertise_init(uint32_t unique_id)
   // Create an advertising set
   sc = sl_bt_advertiser_create_set(&adv_set_handle);
   app_assert_status(sc);
+
+  sc = sl_bt_advertiser_set_tx_power(adv_set_handle, SL_BT_CONFIG_MAX_TX_POWER, selectedTxPower);
+  app_assert_status(sc);
+  app_log_info("Adv power set %d", selectedTxPower);
 
   // Set advertising interval to 100ms
   sc = sl_bt_advertiser_set_timing(
