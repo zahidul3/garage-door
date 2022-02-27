@@ -136,7 +136,6 @@ static void sensor_deinit(void);
 void app_init(void)
 {
   app_log_info("Z Garage demo initialized");
-  app_log_nl();
   sl_power_supply_probe();
   shutdown_start_timer();
   GarageControl_init();
@@ -279,7 +278,7 @@ static void shutdown(sl_simple_timer_t *timer, void *data)
   // Set up for EM4 wakeup from button 0. Need to enable glitch filter
   sl_simple_button_context_t *button = sl_button_btn0.context;
   GPIO_PinModeSet(button->port, button->pin, gpioModeInputPullFilter, 1);
-  GPIO_EM4EnablePinWakeup( (BOARD_BUTTON0_EM4WUEN_MASK << _GPIO_EM4WUEN_EM4WUEN_SHIFT), 0);
+  GPIO_EM4EnablePinWakeup( (0x08 << _GPIO_EM4WUEN_EM4WUEN_SHIFT), 0);
 
   advertise_stop();
 

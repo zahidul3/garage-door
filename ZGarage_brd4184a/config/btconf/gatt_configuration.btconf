@@ -86,7 +86,7 @@
   </service>
   
   <!--Garage Service-->
-  <service advertise="true" name="Garage Service" requirement="mandatory" sourceId="" type="primary" uuid="208df219-60f2-4a46-bc15-d014dba3b2cc">
+  <service advertise="false" id="garage" name="Garage Service" requirement="mandatory" sourceId="" type="primary" uuid="208df219-60f2-4a46-bc15-d014dba3b2cc">
     <informativeText/>
     
     <!--Garage Control-->

@@ -2,16 +2,15 @@
 project_name: ZGarage_brd4184a
 label: ZGarage_brd4184a
 description: |
-  Demonstrates the features of the Thunderboard EFR32BG22 Kit. This can be tested with the Thunderboard mobile app.
+  Demonstrates the features of the Thunderboard EFR32BG22 Kit. This can be tested with the EFR Connect mobile app.
 category: Bluetooth Examples
 package: Bluetooth
 quality: production
 readme:
-- {path: ../../../../../Applications/Simplicity Studio.app/Contents/Eclipse/developer/sdks/gecko_sdk_suite/v3.2/app/bluetooth/documentation/example/soc_thunderboard/readme.html}
+- {path: ../../../SimplicityStudio/SDKs/gecko_sdk/app/bluetooth/documentation/example/soc_thunderboard/readme.md}
 source:
 - {path: advertise.c}
 - {path: app.c}
-- {path: app_properties.c}
 - {path: main.c}
 tag: [prebuilt_demo, 'hardware:board_only']
 include:
@@ -22,7 +21,7 @@ include:
 - path: brd4184a
   file_list:
   - {path: board.h, folder: brd4184a}
-sdk: {id: gecko_sdk, version: 3.2.2}
+sdk: {id: gecko_sdk, version: 4.0.2}
 toolchain_settings: []
 component:
 - {id: iostream_retarget_stdio}
@@ -30,8 +29,8 @@ component:
   id: simple_button
 - {id: bluetooth_feature_gatt_server}
 - {id: gatt_service_battery}
-- {id: simple_timer}
 - {id: bluetooth_feature_sm}
+- {id: simple_timer}
 - {id: mpu}
 - {id: gatt_service_rht}
 - {id: gatt_configuration}
@@ -51,9 +50,9 @@ component:
   id: iostream_usart
 - {id: bluetooth_feature_system}
 - {id: sensor_imu}
-- {id: bluetooth_feature_scanner}
 - instance: [sensor]
   id: i2cspm
+- {id: bluetooth_feature_scanner}
 - {id: printf}
 - {id: gatt_service_imu}
 - {id: component_catalog}
@@ -85,6 +84,6 @@ configuration:
 - {name: APP_LOG_NEW_LINE, value: APP_LOG_NEW_LINE_RN}
 ui_hints:
   highlight:
-  - {path: readme.html, focus: true}
+  - {path: readme.md, focus: true}
   - {path: config/btconf/gatt_configuration_brd4184a.btconf}
 

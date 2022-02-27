@@ -14,7 +14,6 @@ const sli_bt_gattdb_t gattdb = {0};
 #endif // SL_CATALOG_GATT_CONFIGURATION_PRESENT
 #endif // SL_COMPONENT_CATALOG_PRESENT
 
-#include "sl_gatt_service_garage.h"
 #include "sl_ota_dfu.h"
 #include "sl_gatt_service_aio.h"
 #include "sl_gatt_service_battery.h"
@@ -56,6 +55,8 @@ void sl_bt_init(void)
   NVIC_ClearPendingIRQ(PendSV_IRQn);
   NVIC_EnableIRQ(PendSV_IRQn);
 #endif
+  sl_bt_configure_backwards_compatibility(&config);
+
   // Stack initialization could fail, e.g., due to out of memory.
   // The failure could not be returned to user yet as the system initialization
   // does not return an error code.
@@ -71,8 +72,8 @@ SL_WEAK void sl_bt_on_event(sl_bt_msg_t* evt)
 
 void sl_bt_process_event(sl_bt_msg_t *evt)
 {
-  sl_gatt_service_garage_on_event(evt);
   sl_bt_ota_dfu_on_event(evt);
+  sl_gatt_service_garage_on_event(evt);
   sl_gatt_service_aio_on_event(evt);
   sl_gatt_service_battery_on_event(evt);
   sl_gatt_service_hall_on_event(evt);

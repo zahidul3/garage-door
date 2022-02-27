@@ -37,7 +37,7 @@
 
 // <o SL_IOSTREAM_USART_VCOM_BAUDRATE> Baud rate
 // <i> Default: 115200
-#define SL_IOSTREAM_USART_VCOM_BAUDRATE              115200 //921600 //115200
+#define SL_IOSTREAM_USART_VCOM_BAUDRATE              115200
 
 // <o SL_IOSTREAM_USART_VCOM_PARITY> Parity mode to use
 // <usartNoParity=> No Parity
@@ -54,13 +54,14 @@
 // <i> Default: usartStopbits1
 #define SL_IOSTREAM_USART_VCOM_STOP_BITS             usartStopbits1
 
-// <o SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE> Hardware flow control
+// <o SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE> Flow control
 // <usartHwFlowControlNone=> None
 // <usartHwFlowControlCts=> CTS
 // <usartHwFlowControlRts=> RTS
 // <usartHwFlowControlCtsAndRts=> CTS/RTS
+// <uartFlowControlSoftware=> Software Flow control (XON/XOFF)
 // <i> Default: usartHwFlowControlNone
-#define SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE     usartHwFlowControlNone
+#define SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE     usartHwFlowControlCtsAndRts
 
 // <o SL_IOSTREAM_USART_VCOM_RX_BUFFER_SIZE> Receive buffer size
 // <i> Default: 32
@@ -69,7 +70,7 @@
 // <q SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF> Convert \n to \r\n
 // <i> It can be changed at runtime using the C API.
 // <i> Default: 0
-#define SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF     1
+#define SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF     0
 
 // <q SL_IOSTREAM_USART_VCOM_RESTRICT_ENERGY_MODE_TO_ALLOW_RECEPTION> Restrict the energy mode to allow the reception.
 // <i> Default: 1

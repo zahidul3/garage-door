@@ -247,15 +247,15 @@ void advertise_init(uint32_t unique_id)
   sc = sl_bt_advertiser_create_set(&adv_set_handle);
   app_assert_status(sc);
 
-  sc = sl_bt_advertiser_set_tx_power(adv_set_handle, SL_BT_CONFIG_MAX_TX_POWER, selectedTxPower);
+  sc = sl_bt_advertiser_set_tx_power(adv_set_handle, SL_BT_CONFIG_MAX_TX_POWER, &selectedTxPower);
   app_assert_status(sc);
   app_log_info("Adv power set %d", selectedTxPower);
 
-  // Set advertising interval to 100ms
+  // Set advertising interval to 1000ms
   sc = sl_bt_advertiser_set_timing(
     adv_set_handle, // advertising set handle
-    160, // min. adv. interval (milliseconds * 1.6)
-    160, // max. adv. interval (milliseconds * 1.6)
+    1600, // min. adv. interval (milliseconds * 1.6)
+    1600, // max. adv. interval (milliseconds * 1.6)
     0,   // adv. duration
     0);  // max. num. adv. events
   app_assert_status(sc);

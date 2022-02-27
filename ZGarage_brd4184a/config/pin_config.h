@@ -147,5 +147,8 @@
 // $[MODEM]
 // [MODEM]$
 
+// $[CUSTOM_PIN_NAME]
+// [CUSTOM_PIN_NAME]$
+
 #endif // PIN_CONFIG_H
 

@@ -71,7 +71,11 @@ sl_status_t sl_iostream_usart_init_vcom(void)
   init_vcom.parity = SL_IOSTREAM_USART_VCOM_PARITY;
   init_vcom.stopbits = SL_IOSTREAM_USART_VCOM_STOP_BITS;
 #if (_SILICON_LABS_32B_SERIES > 0)
+#if (SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE != uartFlowControlSoftware)
   init_vcom.hwFlowControl = SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE;
+#else
+  init_vcom.hwFlowControl = usartHwFlowControlNone;
+#endif
 #endif
   sl_iostream_usart_config_t config_vcom = { 
     .usart = SL_IOSTREAM_USART_VCOM_PERIPHERAL,
@@ -112,6 +116,15 @@ sl_status_t sl_iostream_usart_init_vcom(void)
     .rx_buffer_length = SL_IOSTREAM_USART_VCOM_RX_BUFFER_SIZE,
     .lf_to_crlf = SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF,
     .rx_when_sleeping = SL_IOSTREAM_USART_VCOM_RESTRICT_ENERGY_MODE_TO_ALLOW_RECEPTION,
+#if defined(SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE)
+#if (SL_IOSTREAM_USART_VCOM_FLOW_CONTROL_TYPE == uartFlowControlSoftware)
+    .sw_flow_control = true,
+#else
+    .sw_flow_control = false,
+#endif
+#else
+    .sw_flow_control = false,
+#endif
   };
   // Instantiate usart instance 
   status = sl_iostream_usart_init(&sl_iostream_vcom,

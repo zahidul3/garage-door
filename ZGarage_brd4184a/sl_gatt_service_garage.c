@@ -73,6 +73,7 @@ static void garage_write_cb(sl_bt_evt_gatt_server_user_write_request_t *data)
 
 void sl_gatt_service_garage_on_event(sl_bt_msg_t *evt)
 {
+  //app_log_debug("in sl_gatt_service_garage_on_event char: %d", evt->data.evt_gatt_server_user_write_request.characteristic);
 
   if (gattdb_garage_access == evt->data.evt_gatt_server_user_write_request.characteristic) {
       garage_write_cb(&evt->data.evt_gatt_server_user_write_request);
